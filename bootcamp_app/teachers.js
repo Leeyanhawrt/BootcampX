@@ -15,9 +15,9 @@ SELECT DISTINCT teachers.name AS name, cohorts.name AS cohort
   JOIN assistance_requests ON (assistance_requests.teacher_id = teachers.id)
   JOIN students ON (students.id = assistance_requests.student_id)
   JOIN cohorts ON (cohorts.id = students.cohort_id)
-  WHERE cohorts.name = '${processArgs[0]}'
-  ORDER BY teachers.name
-`)
+  WHERE cohorts.name = $1
+  ORDER BY teachers.name;
+`, [processArgs[0]])
   .then(data => {
     data.rows.forEach(teacher => {
       console.log(`${teacher.cohort}: ${teacher.name}`)
